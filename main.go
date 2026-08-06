@@ -18,6 +18,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"math"
 	"math/big"
 	"os"
 	"strconv"
@@ -221,6 +222,22 @@ func abs(x int) int {
 	return x
 }
 
+// intPow 整数快速幂（指数非负）；负数指数返回 1/base^|exp| 的截断整数（此处仅支持非负）。
+func intPow(base, exp int) int {
+	if exp < 0 {
+		return 0
+	}
+	r := 1
+	for exp > 0 {
+		if exp&1 == 1 {
+			r *= base
+		}
+		base *= base
+		exp >>= 1
+	}
+	return r
+}
+
 func main() {
 	// 用一个"-help"之外的子命令来区分功能。
 	if len(os.Args) < 2 {
@@ -286,6 +303,20 @@ func main() {
 			os.Exit(1)
 		}
 		fmt.Printf("C(%d, %d) = %s\n", n, k, c.String())
+	case "sqrt":
+		n := atoi(rest)
+		if n < 0 {
+			fmt.Fprintln(os.Stderr, "负数不能开平方")
+			os.Exit(1)
+		}
+		fmt.Printf("sqrt(%d) = %v\n", n, math.Sqrt(float64(n)))
+	case "pow":
+		if len(rest) < 2 {
+			fmt.Fprintln(os.Stderr, "pow 需要两个数: 底数 指数")
+			os.Exit(1)
+		}
+		base, exp := atoi(rest[:1]), atoi(rest[1:2])
+		fmt.Printf("%d^%d = %d\n", base, exp, intPow(base, exp))
 	default:
 		fmt.Fprintln(os.Stderr, "未知子命令:", cmd)
 		os.Exit(1)

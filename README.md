@@ -12,6 +12,8 @@ go run . fact 5             # 5 的阶乘（用 math/big，大数不溢出）
 go run . gcd 12 18          # 12 和 18 的最大公约数
 go run . lcm 4 6            # 4 和 6 的最小公倍数
 go run . comb 10 3          # 组合数 C(10,3)
+go run . sqrt 144           # 平方根 = 12
+go run . pow 2 10           # 2 的 10 次方 = 1024
 ```
 
 `calc` 的参数里如果有空格，可以分开写：`go run . calc 2 + 3`，程序会自动拼起来。
@@ -27,6 +29,8 @@ go run . comb 10 3          # 组合数 C(10,3)
 | `gcd` | `gcd 12 18` | 最大公约数（辗转相除法） |
 | `lcm` | `lcm 4 6` | 最小公倍数 |
 | `comb` | `comb 10 3` | 组合数 C(n,k)（math/big，大数不溢出） |
+| `sqrt` | `sqrt 144` | 平方根 |
+| `pow` | `pow 2 10` | 整数幂（底数^指数） |
 
 ## 表达式是怎么算出来的
 
